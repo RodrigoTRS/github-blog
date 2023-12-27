@@ -9,6 +9,7 @@ interface GithubProfile {
     'bio': string;
     'followers': number;
     'company' ?: string;
+    'public_repos': number;
 }
 
 interface ProfileContextType {
@@ -29,7 +30,8 @@ export function ProfileProvider({children}: ProfileContextProps) {
         avatar_url: "",
         url: "",
         bio: "",
-        followers: 0
+        followers: 0,
+        public_repos: 0,
     });
 
     const fetchProfile = useCallback(

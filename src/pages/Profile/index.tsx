@@ -1,5 +1,6 @@
 import { Header } from "../../components/Header"
 import { ProfileCard } from "../../components/ProfileCard";
+import { SearchBar } from "../../components/SearchBar";
 import { ProfileContainer } from "./styles";
 
 
@@ -10,6 +11,7 @@ export function Profile() {
             <Header />
             <ProfileContainer>
                 <ProfileCard />
+                <SearchBar />
             </ProfileContainer>
         </>
     )
