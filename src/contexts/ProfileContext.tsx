@@ -15,6 +15,7 @@ interface GithubProfile {
 
 interface ProfileContextType {
     profile: GithubProfile;
+    loading: boolean;
 }
 
 interface ProfileContextProps {
@@ -24,6 +25,8 @@ interface ProfileContextProps {
 export const ProfileContext = createContext({} as ProfileContextType)
 
 export function ProfileProvider({children}: ProfileContextProps) {
+
+    const [loading, setLoading] = useState(false);
 
     const [profile, setProfile] = useState<GithubProfile>({
         name: "",
@@ -39,9 +42,17 @@ export function ProfileProvider({children}: ProfileContextProps) {
     
     const fetchProfile = useCallback(
         async () => {
-            const response = await api.get<GithubProfile>('');
-            console.log(response.data)
-            setProfile(response.data);
+            try {
+                setLoading(true);
+                const response = await api.get<GithubProfile>('');
+                setProfile(response.data);
+            } catch (error) {
+                console.error(error)
+            } finally {
+                setTimeout(() => {
+                    setLoading(false)
+                }, 1500)
+            }
         }, []
         )
         
@@ -51,7 +62,7 @@ export function ProfileProvider({children}: ProfileContextProps) {
     }, [fetchProfile])
 
     return (
-        <ProfileContext.Provider value={{profile}}>
+        <ProfileContext.Provider value={{profile, loading}}>
             {children}
         </ProfileContext.Provider>
     )

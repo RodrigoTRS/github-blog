@@ -3,16 +3,27 @@ import { defaultTheme } from "./styles/themes/default";
 import { GlobalStyles } from "./styles/global";
 import { Profile } from "./pages/Profile";
 import { ProfileProvider } from "./contexts/ProfileContext";
-import {Route, RouterProvider, Routes, createBrowserRouter} from "react-router-dom"
+import {Outlet, RouterProvider, createBrowserRouter} from "react-router-dom"
 import { Error } from "./pages/Error";
 import { ReposProvider } from "./contexts/ReposContext";
 import { Repo } from "./pages/Repo";
+import { Header } from "./components/Header";
 
 const router = createBrowserRouter([
   {
     path: "*",
     element: <Root />,
-    errorElement: <Error />
+    errorElement: <Error />,
+    children: [
+      {
+        path: "",
+        element: <Profile />,
+      },
+      {
+        path: "repo/:repoId",
+        element: <Repo />,
+      },
+    ]
     // TODO: Configure outlet here for Outlet using on Header
  },
 ])
@@ -29,10 +40,10 @@ export function Root() {
       <GlobalStyles />
       <ProfileProvider>
       <ReposProvider>
-        <Routes>
-          <Route path="/" element={<Profile />} />
-          <Route path="/repo" element={<Repo />} />
-        </Routes>
+
+        <Header />
+        <Outlet />
+
       </ReposProvider>
       </ProfileProvider>
     </ThemeProvider>

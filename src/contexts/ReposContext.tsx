@@ -13,6 +13,8 @@ interface GithubRepo {
 
 interface ReposContextType {
     repos: GithubRepo[];
+    fetchRepos: (query?: string) => Promise<void>;
+    fetchSpecifficRepo: (id: number) => Promise<GithubRepo | undefined>;
     loading: boolean;
 }
 
@@ -31,11 +33,34 @@ export function ReposProvider({children}: ReposContextProps) {
 
 
     const fetchRepos = useCallback(
-        async () => {
+        async (query?: string) => {
             try {
                 setLoading(true)
-                const response = await api.get('/repos');
-                setRepos(response.data)
+                const response = await api.get<GithubRepo[]>('/repos');
+                console.log(query)
+                if (query) {
+                    const filteredRepos = response.data.filter(repo => repo.name.includes(query));
+                    setRepos(filteredRepos)
+                } else {
+                    setRepos(response.data)
+                }
+            } catch (error) {
+                console.error(error)
+            } finally {
+                setTimeout(() => {
+                    setLoading(false)
+                }, 1000);
+            }
+        }, []
+    )
+
+    const fetchSpecifficRepo = useCallback(
+        async (id: number) => {
+            try {
+                setLoading(true)
+                const response = await api.get<GithubRepo[]>('/repos');
+                const filteredRepo = response.data.filter(repo => repo.id === id);
+                return filteredRepo[0];
             } catch (error) {
                 console.error(error)
             } finally {
@@ -51,7 +76,7 @@ export function ReposProvider({children}: ReposContextProps) {
     }, [fetchRepos])
 
     return (
-        <ReposContext.Provider value={{repos, loading}}>
+        <ReposContext.Provider value={{repos, loading, fetchRepos, fetchSpecifficRepo}}>
             {children}
         </ReposContext.Provider>
     )

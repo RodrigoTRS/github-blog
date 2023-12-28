@@ -2,58 +2,63 @@ import { useContext } from "react";
 import { GitHubLink, ProfileCardContainer, ProfileContent, ProfileFooter, ProfileFooterIcon, ProfileHeader, ProfileText } from "./styles";
 import { ProfileContext } from "../../contexts/ProfileContext";
 import { Buildings, GithubLogo, Link, Users } from "phosphor-react";
+import { Loader } from "../Loader";
 
 export function ProfileCard() {
 
-    const { profile } = useContext(ProfileContext)
+    const { profile, loading } = useContext(ProfileContext)
 
     return (
-        <ProfileCardContainer>
+            <>
+                {loading ? <Loader /> :
+                <ProfileCardContainer>
 
-            <img src={profile.avatar_url} alt="" />
+                    <img src={profile.avatar_url} alt="" />
 
-            <ProfileContent>
-                
-                <ProfileText>
-
-                    <ProfileHeader>
-                        <h1>{profile.name}</h1>
-                        <GitHubLink
-                            href={profile.url}
-                            >
-                            GITHUB
-                            <Link size={12} />
-                        </GitHubLink>
-                    </ProfileHeader>
-
-                    <p>{profile.bio}</p>
-
-                </ProfileText>
-
-                <ProfileFooter>
-
-                    <ProfileFooterIcon>
-                        <GithubLogo size={18}/>
-                        <span>{profile.login}</span>
-                    </ProfileFooterIcon>
-
-                    { profile.company && 
-                        <ProfileFooterIcon>
-                            <Buildings size={18}/>
-                            <span>{profile.company}</span>
-                        </ProfileFooterIcon>
-                    }
-
-                    <ProfileFooterIcon>
-                        <Users size={18}/>
-                        <span>{profile.followers} seguidores</span>
+                    <ProfileContent>
                         
-                    </ProfileFooterIcon>
+                        <ProfileText>
 
-                </ProfileFooter>
+                            <ProfileHeader>
+                                <h1>{profile.name}</h1>
+                                <GitHubLink
+                                    href={profile.url}
+                                    >
+                                    GITHUB
+                                    <Link size={12} />
+                                </GitHubLink>
+                            </ProfileHeader>
 
-            </ProfileContent>
+                            <p>{profile.bio}</p>
 
-        </ProfileCardContainer>
+                        </ProfileText>
+
+                        <ProfileFooter>
+
+                            <ProfileFooterIcon>
+                                <GithubLogo size={18}/>
+                                <span>{profile.login}</span>
+                            </ProfileFooterIcon>
+
+                            { profile.company && 
+                                <ProfileFooterIcon>
+                                    <Buildings size={18}/>
+                                    <span>{profile.company}</span>
+                                </ProfileFooterIcon>
+                            }
+
+                            <ProfileFooterIcon>
+                                <Users size={18}/>
+                                <span>{profile.followers} seguidores</span>
+                                
+                            </ProfileFooterIcon>
+
+                        </ProfileFooter>
+
+                    </ProfileContent>
+
+                </ProfileCardContainer>
+            }
+        </>
     )
 }
