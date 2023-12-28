@@ -55,6 +55,8 @@ export const GitHubLink = styled.a`
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 0.5rem;
+    border-radius: 0.25rem;
     gap: 0.5rem;
     
 

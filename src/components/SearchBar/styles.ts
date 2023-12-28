@@ -27,6 +27,7 @@ export const SearchForm = styled.form`
         border: 2px solid ${props => props.theme['base-border']};
         border-radius: 6px;
         width: 100%;
+        color: ${props => props.theme['base-text']};
 
         &::placeholder {
             color: ${props => props.theme['base-label']};
