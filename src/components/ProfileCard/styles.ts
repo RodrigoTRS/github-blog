@@ -58,13 +58,6 @@ export const GitHubLink = styled.a`
     padding: 0 0.5rem;
     border-radius: 0.25rem;
     gap: 0.5rem;
-    
-
-    img {
-        width: 12px;
-        height: 12px;
-        color: ${props => props.theme['blue']};
-    }
 `
 
 export const ProfileFooter = styled.footer`

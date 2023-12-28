@@ -7,12 +7,10 @@ import { ProfileContainer } from "./styles";
 
 export function Profile() {
     return (
-        <>
-            <ProfileContainer>
-                <ProfileCard />
-                <SearchBar />
-                <ReposGrid />
-            </ProfileContainer>
-        </>
+        <ProfileContainer>
+            <ProfileCard />
+            <SearchBar />
+            <ReposGrid />
+        </ProfileContainer>
     )
 }
